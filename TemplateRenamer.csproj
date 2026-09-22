@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>TemplateRenamer</AssemblyName>
+    <RootNamespace>TemplateRenamer</RootNamespace>
+
+    <!-- Single-file publishing defaults -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <PublishTrimmed>true</PublishTrimmed>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+  </PropertyGroup>
+
+  <Target Name="PublishWindows">
+    <Exec
+      Command="dotnet publish $(MSBuildProjectFile) -r win-x64 -c Release -o publish/win-x64 --nologo" />
+    <Exec
+      Command="dotnet publish $(MSBuildProjectFile) -r win-arm64 -c Release -o publish/win-arm64 --nologo" />
+  </Target>
+
+  <Target Name="PublishLinux">
+    <Exec
+      Command="dotnet publish $(MSBuildProjectFile) -r linux-x64 -c Release -o publish/linux-x64 --nologo" />
+    <Exec
+      Command="dotnet publish $(MSBuildProjectFile) -r linux-arm64 -c Release -o publish/linux-arm64 --nologo" />
+  </Target>
+
+  <Target Name="PublishMac">
+    <Exec
+      Command="dotnet publish $(MSBuildProjectFile) -r osx-x64 -c Release -o publish/osx-x64 --nologo" />
+    <Exec
+      Command="dotnet publish $(MSBuildProjectFile) -r osx-arm64 -c Release -o publish/osx-arm64 --nologo" />
+  </Target>
+
+  <Target Name="PublishAll" DependsOnTargets="PublishWindows;PublishLinux;PublishMac" />
+
+
+</Project>
